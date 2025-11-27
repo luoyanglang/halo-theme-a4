@@ -1,0 +1,248 @@
+/* UI Components Styles */
+
+/* 站点头部 */
+.site-header {
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-index-bg);
+}
+
+.header-container {
+  max-width: var(--width-big);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* 站点头像 */
+.site-avatar {
+  width: 60px;
+  height: 60px;
+  margin-right: var(--spacing-md);
+}
+
+.site-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-avatar.rounded img {
+  border-radius: 50%;
+}
+
+.site-avatar.rotating:hover img {
+  animation: rotate 0.6s ease-in-out;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 站点标题 */
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.site-title a {
+  color: var(--color-font);
+}
+
+/* 导航菜单 */
+.navigation {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item a {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.nav-item a:hover,
+.nav-item a.active {
+  background-color: var(--color-code-bg);
+}
+
+/* 暗黑模式切换 */
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.dark-mode-toggle:hover {
+  background-color: var(--color-code-bg);
+}
+
+body:not(.dark-mode) .dark-mode-toggle .icon-moon {
+  display: none;
+}
+
+body.dark-mode .dark-mode-toggle .icon-sun {
+  display: none;
+}
+
+/* 站点页脚 */
+.site-footer {
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-index-bg);
+  margin-top: var(--spacing-xl);
+  text-align: center;
+}
+
+.footer-container {
+  max-width: var(--width-big);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  padding: var(--spacing-xs);
+}
+
+.footer-copyright,
+.footer-theme-info {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  margin: var(--spacing-xs) 0;
+}
+
+/* 工具按钮 */
+.tools {
+  position: fixed;
+  right: var(--spacing-md);
+  bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  z-index: 1000;
+}
+
+.tool-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-post-bg);
+  color: var(--color-font);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.tool-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tool-btn:active {
+  transform: translateY(0);
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-xl) 0;
+}
+
+.page-link {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.page-link:hover {
+  background-color: var(--color-code-bg);
+}
+
+.page-info {
+  font-size: 0.875rem;
+  opacity: 0.7;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .site-avatar {
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+  
+  .navigation {
+    width: 100%;
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .nav-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .tools {
+    right: var(--spacing-sm);
+    bottom: var(--spacing-sm);
+  }
+  
+  .tool-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-list {
+    gap: var(--spacing-xs);
+  }
+  
+  .nav-item a {
+    padding: var(--spacing-xs);
+    font-size: 0.875rem;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+}
