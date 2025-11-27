@@ -1,46 +1,39 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:with="title=${title ?: ''}, description=${description ?: site.description}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Title -->
-    <title th:text="${site.title + (title != null ? ' - ' + title : '')}">A4 Theme</title>
+    <title th:text="${title != '' ? title + ' - ' + site.title : site.title}">A4 Theme</title>
     
     <!-- SEO Meta -->
-    <meta name="description" th:content="${description ?: site.description}">
-    <meta name="keywords" th:content="${keywords ?: site.keywords}">
+    <meta name="description" th:content="${description}">
     <meta name="author" th:content="${site.title}">
     
-    <!-- Open Graph -->
-    <meta property="og:title" th:content="${title ?: site.title}">
-    <meta property="og:description" th:content="${description ?: site.description}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" th:content="${siteUrl}">
-    
     <!-- Favicon -->
-    <link rel="icon" th:href="${theme.config.basic.avatar.favicon ?: '/assets/images/favicon.png'}">
+    <link rel="icon" th:href="${site.favicon}">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" th:href="@{/themes/theme-a4/assets/css/reset.css}">
-    <link rel="stylesheet" th:href="@{/themes/theme-a4/assets/css/style.css}">
-    <link rel="stylesheet" th:href="@{/themes/theme-a4/assets/css/markdown.css}">
-    <link rel="stylesheet" th:href="@{/themes/theme-a4/assets/css/ui.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/reset.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/style.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/markdown.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/ui.css}">
     
     <!-- Custom CSS -->
     <style th:if="${theme.config.advanced?.customCSS}" th:utext="${theme.config.advanced.customCSS}"></style>
     
-    <!-- Additional Head Content -->
     <th:block th:fragment="head"></th:block>
 </head>
-<body th:classappend="${theme.config.color?.colorScheme ?: 'greywhite'}">
+<body>
     
     <!-- Header -->
     <th:block th:replace="~{modules/header :: header}"></th:block>
     
     <!-- Main Content -->
-    <main class="main-content" th:classappend="'width-' + ${contentWidth ?: 'middle'}">
+    <main class="main-content">
         <th:block th:fragment="content"></th:block>
     </main>
     
@@ -48,22 +41,17 @@
     <th:block th:replace="~{modules/footer :: footer}"></th:block>
     
     <!-- Tools -->
-    <div class="tools" th:if="${theme.config.tools?.returnToTop || theme.config.tools?.returnToLast}">
-        <button class="tool-btn return-to-top" 
-                th:if="${theme.config.tools?.returnToTop}" 
-                title="回到顶部">↑</button>
-        <button class="tool-btn return-to-last" 
-                th:if="${theme.config.tools?.returnToLast}" 
-                title="返回上页">←</button>
+    <div class="tools">
+        <button class="tool-btn return-to-top" title="回到顶部">↑</button>
+        <button class="tool-btn return-to-last" title="返回上页">←</button>
     </div>
     
     <!-- Scripts -->
-    <script th:src="@{/themes/theme-a4/assets/js/main.js}"></script>
+    <script th:src="@{${theme.spec.assets}/js/main.js}"></script>
     
     <!-- Custom JS -->
     <script th:if="${theme.config.advanced?.customJS}" th:utext="${theme.config.advanced.customJS}"></script>
     
-    <!-- Additional Scripts -->
     <th:block th:fragment="scripts"></th:block>
 </body>
 </html>

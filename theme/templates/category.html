@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      th:with="title=${category.spec.displayName}">
+<head>
+    <title th:text="${category.spec.displayName + ' - ' + site.title}">分类</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="category-page">
+        <div class="category-container">
+            <h1 class="page-title" th:text="'分类：' + ${category.spec.displayName}">分类</h1>
+            
+            <div class="posts-list" th:if="${posts != null && !posts.items.empty}">
+                <div th:each="post : ${posts.items}" class="post-item">
+                    <time class="post-date" 
+                          th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
+                    <h2 class="post-title">
+                        <a th:href="@{${post.status.permalink}}" 
+                           th:text="${post.spec.title}">文章标题</a>
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="empty-state" th:if="${posts == null || posts.items.empty}">
+                <p>该分类下暂无文章</p>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

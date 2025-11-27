@@ -2,15 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <header class="site-header" th:fragment="header">
     <div class="header-container">
-        <!-- Logo/Avatar -->
-        <div class="site-avatar" 
-             th:classappend="${(theme.config.basic?.avatar?.isRounded ? 'rounded' : '') + ' ' + (theme.config.basic?.avatar?.isRotating ? 'rotating' : '')}">
-            <a th:href="@{/}" title="返回首页">
-                <img th:src="${theme.config.basic?.avatar?.favicon ?: '/assets/images/favicon.png'}" 
-                     th:alt="${site.title}">
-            </a>
-        </div>
-        
         <!-- Site Title -->
         <h1 class="site-title">
             <a th:href="@{/}" th:text="${site.title}">Site Title</a>
@@ -22,10 +13,7 @@
         </nav>
         
         <!-- Dark Mode Toggle -->
-        <button class="dark-mode-toggle" 
-                th:if="${theme.config.tools?.darkMode}"
-                title="切换暗黑模式"
-                aria-label="切换暗黑模式">
+        <button class="dark-mode-toggle" title="切换暗黑模式">
             <span class="icon-sun">☀️</span>
             <span class="icon-moon">🌙</span>
         </button>

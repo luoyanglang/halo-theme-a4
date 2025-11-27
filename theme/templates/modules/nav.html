@@ -2,14 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <nav class="navigation" th:fragment="nav">
     <ul class="nav-list">
-        <li class="nav-item" th:each="menu : ${menus}">
-            <a th:href="${menu.status.href}" 
-               th:text="${menu.spec.displayName}"
-               th:target="${menu.spec.target ?: '_self'}"
-               th:classappend="${menu.status.active ? 'active' : ''}"
-               th:title="${menu.spec.displayName}">
-                Menu Item
-            </a>
+        <li class="nav-item">
+            <a th:href="@{/}">首页</a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/archives}">归档</a>
         </li>
     </ul>
 </nav>

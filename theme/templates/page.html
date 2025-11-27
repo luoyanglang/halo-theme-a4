@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      th:with="title=${singlePage.spec.title}, description=${singlePage.spec.excerpt}">
+<head>
+    <title th:text="${singlePage.spec.title + ' - ' + site.title}">页面标题</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <article class="page">
+        <div class="page-container">
+            <header class="page-header">
+                <h1 class="page-title" th:text="${singlePage.spec.title}">页面标题</h1>
+            </header>
+            
+            <div class="page-content markdown-body" th:utext="${singlePage.content.content}">
+                页面内容
+            </div>
+        </div>
+    </article>
+</th:block>
+</body>
+</html>

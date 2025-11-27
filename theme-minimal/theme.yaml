@@ -1,0 +1,16 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-minimal
+spec:
+  displayName: A4 Minimal
+  author:
+    name: luoyanglang
+    website: https://github.com/luoyanglang
+  description: A4 极简主题
+  version: 0.3.0
+  require: ">=2.10.0"
+  homepage: https://github.com/luoyanglang/halo-theme-a4
+  repo: https://github.com/luoyanglang/halo-theme-a4
+  license:
+    - name: MIT

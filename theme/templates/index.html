@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${site.title}">首页</title>
-    <meta name="description" th:content="${site.description}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.title}">A4 Theme</title>
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/reset.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/style.css}">
+    <link rel="stylesheet" th:href="@{${theme.spec.assets}/css/ui.css}">
 </head>
 <body>
-<th:block layout:fragment="content">
-    <div class="index-page" 
-         th:classappend="'width-' + ${theme.config.basic?.layout?.indexWidth ?: 'small'} + ' title-' + ${theme.config.basic?.layout?.indexTitlePosition ?: 'center'}">
-        <div class="index-container">
-            <!-- Index Header -->
-            <div class="index-header">
-                <h1 class="index-title" th:text="${site.title}">网站标题</h1>
-                <p class="index-description" th:if="${site.description}" th:text="${site.description}">网站描述</p>
-            </div>
-            
-            <!-- Index Content (Custom Page Content) -->
-            <div class="index-content" th:if="${singlePage != null}" th:utext="${singlePage.content.content}">
-                <!-- 自定义首页内容 -->
-            </div>
-            
-            <!-- Recent Posts (if enabled) -->
-            <div class="index-posts" th:if="${theme.config.index?.list && posts != null}">
-                <h2>最新文章</h2>
-                <ul class="post-list">
-                    <li class="post-item" th:each="post : ${posts.items}">
-                        <time class="post-date" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
-                        <h3 class="post-title">
-                            <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">文章标题</a>
-                        </h3>
-                    </li>
+    <header class="site-header">
+        <div class="header-container">
+            <h1 class="site-title">
+                <a th:href="@{/}" th:text="${site.title}">Site Title</a>
+            </h1>
+            <nav class="site-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a th:href="@{/}">首页</a></li>
+                    <li class="nav-item"><a th:href="@{/archives}">归档</a></li>
                 </ul>
-            </div>
-            
-            <!-- Index Footer -->
-            <div class="index-footer" th:if="${theme.config.basic?.footer?.indexFooter}">
-                <p th:utext="${theme.config.basic.footer.indexFooter}">Email: example@gmail.com</p>
-            </div>
-            
-            <!-- Statistics -->
-            <div class="index-stats" th:if="${theme.config.indexInfo?.allWordCount || theme.config.indexInfo?.allViewCount}">
-                <span th:if="${theme.config.indexInfo?.allWordCount}" class="stat-item">
-                    总字数: <strong th:text="${stats.wordCount ?: 0}">0</strong>
-                </span>
-                <span th:if="${theme.config.indexInfo?.allViewCount}" class="stat-item">
-                    总访问: <strong th:text="${stats.visit ?: 0}">0</strong>
-                </span>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="index-page">
+            <div class="index-container">
+                <div class="index-header">
+                    <h1 class="index-title" th:text="${site.title}">网站标题</h1>
+                    <p class="index-description" th:if="${site.description}" th:text="${site.description}">网站描述</p>
+                </div>
+                
+                <div class="index-content">
+                    <p>欢迎来到 A4 主题！</p>
+                    <p>这是一个极简的博客主题，模仿 A4 纸张的设计风格。</p>
+                </div>
             </div>
         </div>
-    </div>
-</th:block>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-copyright">
+                <p th:text="'© ' + ${#temporals.year(#temporals.createNow())} + ' ' + ${site.title}">© 2024 Site</p>
+            </div>
+            <div class="footer-theme-info">
+                <p>Powered by <a href="https://halo.run" target="_blank">Halo</a> | Theme A4</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script th:src="@{${theme.spec.assets}/js/main.js}"></script>
 </body>
 </html>

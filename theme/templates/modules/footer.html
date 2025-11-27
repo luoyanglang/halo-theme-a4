@@ -2,24 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <footer class="site-footer" th:fragment="footer">
     <div class="footer-container">
-        <!-- Footer Links -->
-        <div class="footer-links" th:if="${footerMenus != null && !footerMenus.empty}">
-            <a th:each="menu : ${footerMenus}" 
-               th:href="${menu.status.href}" 
-               th:text="${menu.spec.displayName}"
-               th:target="${menu.spec.target ?: '_self'}"
-               th:title="${menu.spec.displayName}">
-                Footer Link
-            </a>
-        </div>
-        
         <!-- Copyright -->
-        <div class="footer-copyright" th:if="${theme.config.basic?.footer?.copyright}">
-            <p th:utext="${theme.config.basic.footer.copyright}">© 2024 Your Site</p>
+        <div class="footer-copyright">
+            <p th:text="'© ' + ${#temporals.year(#temporals.createNow())} + ' ' + ${site.title}">© 2024 Your Site</p>
         </div>
         
         <!-- Theme Info -->
-        <div class="footer-theme-info" th:if="${theme.config.basic?.footer?.showThemeInfo}">
+        <div class="footer-theme-info">
             <p>
                 Powered by <a href="https://halo.run" target="_blank" rel="noopener">Halo</a> | 
                 Theme <a href="https://github.com/luoyanglang/halo-theme-a4" target="_blank" rel="noopener">A4</a>
