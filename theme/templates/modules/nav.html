@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="nav">
+<nav class="navigation">
+    <ul class="nav-list">
+        <li class="nav-item" th:each="menu : ${menus}">
+            <a th:href="${menu.href}" 
+               th:text="${menu.name}"
+               th:target="${menu.target}"
+               th:classappend="${menu.active ? 'active' : ''}">
+                Menu Item
+            </a>
+        </li>
+    </ul>
+</nav>
+</html>

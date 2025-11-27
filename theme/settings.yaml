@@ -1,0 +1,265 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-a4-setting
+spec:
+  forms:
+    - group: basic
+      label: 基础设置
+      formSchema:
+        - $formkit: group
+          name: layout
+          label: 布局配置
+          value:
+            indexWidth: small
+            indexTitlePosition: left
+            postWidth: middle
+            postTitlePosition: center
+          children:
+            - $formkit: select
+              name: indexWidth
+              label: 首页宽度
+              options:
+                - label: 小
+                  value: small
+                - label: 中
+                  value: middle
+                - label: 大
+                  value: big
+            - $formkit: select
+              name: indexTitlePosition
+              label: 首页标题位置
+              options:
+                - label: 左对齐
+                  value: left
+                - label: 居中
+                  value: center
+            - $formkit: select
+              name: postWidth
+              label: 文章页宽度
+              options:
+                - label: 中
+                  value: middle
+                - label: 大
+                  value: big
+            - $formkit: select
+              name: postTitlePosition
+              label: 文章标题位置
+              options:
+                - label: 左对齐
+                  value: left
+                - label: 居中
+                  value: center
+
+        - $formkit: group
+          name: avatar
+          label: 头像配置
+          value:
+            favicon: /assets/images/favicon.png
+            isRounded: false
+            isRotating: false
+          children:
+            - $formkit: attachment
+              name: favicon
+              label: 头像图片
+            - $formkit: checkbox
+              name: isRounded
+              label: 圆形头像
+            - $formkit: checkbox
+              name: isRotating
+              label: 悬浮旋转效果
+              help: 仅圆形头像生效
+
+        - $formkit: group
+          name: footer
+          label: 页脚配置
+          value:
+            indexFooter: "Email:example@gmail.com"
+            postFooter: "🌊看过大海的人不会忘记海的广阔🌊"
+            showThemeInfo: true
+            copyright: "© 2024 Your Site"
+          children:
+            - $formkit: text
+              name: indexFooter
+              label: 首页页脚
+              help: 支持邮箱自动链接化，格式：Email:xxx@gmail.com
+            - $formkit: text
+              name: postFooter
+              label: 文章页脚
+            - $formkit: checkbox
+              name: showThemeInfo
+              label: 显示主题信息
+            - $formkit: text
+              name: copyright
+              label: 版权信息
+
+    - group: color
+      label: 配色方案
+      formSchema:
+        - $formkit: select
+          name: colorScheme
+          label: 预设配色
+          value: greywhite
+          options:
+            - label: 灰白配色（默认）
+              value: greywhite
+            - label: 绿金配色
+              value: greengold
+            - label: 自定义
+              value: custom
+
+        - $formkit: group
+          name: customColors
+          label: 自定义颜色
+          help: 仅当选择"自定义"时生效
+          value:
+            font: "#333333"
+            background: "#f5f5f5"
+            indexBackground: "#ffffff"
+            postBackground: "#ffffff"
+            codeBackground: "#f5f5f5"
+            codeFont: "#333333"
+            linkBefore: "#0066cc"
+            linkAfter: "#551a8b"
+          children:
+            - $formkit: color
+              name: font
+              label: 字体颜色
+            - $formkit: color
+              name: background
+              label: 底层背景色
+            - $formkit: color
+              name: indexBackground
+              label: 首页背景色
+            - $formkit: color
+              name: postBackground
+              label: 文章页背景色
+            - $formkit: color
+              name: codeBackground
+              label: 代码块背景色
+            - $formkit: color
+              name: codeFont
+              label: 代码块字体色
+            - $formkit: color
+              name: linkBefore
+              label: 链接未访问颜色
+            - $formkit: color
+              name: linkAfter
+              label: 链接已访问颜色
+
+    - group: tools
+      label: 工具开关
+      formSchema:
+        - $formkit: checkbox
+          name: darkMode
+          label: 暗黑模式
+          value: true
+        - $formkit: checkbox
+          name: returnToTop
+          label: 回到顶部按钮
+          value: true
+        - $formkit: checkbox
+          name: returnToLast
+          label: 回退页面按钮
+          value: true
+        - $formkit: checkbox
+          name: topToc
+          label: 文章顶部目录
+          value: true
+        - $formkit: checkbox
+          name: leftToc
+          label: 文章左侧悬浮目录
+          value: true
+          help: 仅大屏幕显示
+
+    - group: font
+      label: 字体设置
+      formSchema:
+        - $formkit: checkbox
+          name: enableFontSwitch
+          label: 启用字体切换
+          value: false
+        - $formkit: checkbox
+          name: useLXGWWenKai
+          label: 使用霞鹜文楷
+          value: true
+          help: 关闭后使用思源宋体
+
+    - group: post
+      label: 文章设置
+      formSchema:
+        - $formkit: group
+          name: postInfo
+          label: 文章信息显示
+          value:
+            showUpdateDate: true
+            showWordCount: true
+            showReadTime: true
+            showViewCount: true
+            showPrevNext: true
+            prevText: "上一篇"
+            nextText: "下一篇"
+            endContent: "以上"
+          children:
+            - $formkit: checkbox
+              name: showUpdateDate
+              label: 显示更新时间
+            - $formkit: checkbox
+              name: showWordCount
+              label: 显示字数统计
+            - $formkit: checkbox
+              name: showReadTime
+              label: 显示阅读时间
+            - $formkit: checkbox
+              name: showViewCount
+              label: 显示阅读量
+            - $formkit: checkbox
+              name: showPrevNext
+              label: 显示上下篇导航
+            - $formkit: text
+              name: prevText
+              label: 上一篇提示文字
+            - $formkit: text
+              name: nextText
+              label: 下一篇提示文字
+            - $formkit: text
+              name: endContent
+              label: 文章结束提示
+
+    - group: gallery
+      label: 图片画廊
+      formSchema:
+        - $formkit: checkbox
+          name: thumbnail
+          label: 显示缩略图
+          value: true
+        - $formkit: checkbox
+          name: zoom
+          label: 缩放功能
+          value: true
+        - $formkit: checkbox
+          name: rotate
+          label: 旋转功能
+          value: true
+        - $formkit: checkbox
+          name: autoplay
+          label: 自动播放
+          value: true
+        - $formkit: checkbox
+          name: fullScreen
+          label: 全屏功能
+          value: true
+
+    - group: advanced
+      label: 高级设置
+      formSchema:
+        - $formkit: textarea
+          name: customCSS
+          label: 自定义 CSS
+          help: 在这里添加你的自定义样式
+          rows: 10
+        - $formkit: textarea
+          name: customJS
+          label: 自定义 JavaScript
+          help: 在这里添加你的自定义脚本
+          rows: 10

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="'归档 - ' + ${site.title}">归档</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="archives-page">
+        <div class="archives-container">
+            <h1 class="page-title">文章归档</h1>
+            
+            <!-- Posts List -->
+            <div class="posts-list">
+                <div th:each="post : ${posts.items}" class="post-item">
+                    <time class="post-date" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
+                    <h2 class="post-title">
+                        <a th:href="@{/archives/{slug}(slug=${post.spec.slug})}" 
+                           th:text="${post.spec.title}">文章标题</a>
+                    </h2>
+                    <p class="post-excerpt" th:if="${post.spec.excerpt}" th:text="${post.spec.excerpt}">文章摘要</p>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <nav class="pagination" th:if="${posts.total > posts.size}">
+                <a th:if="${posts.hasPrevious}" 
+                   th:href="@{/archives(page=${posts.page - 1})}"
+                   class="page-link prev">上一页</a>
+                <span class="page-info">
+                    第 <span th:text="${posts.page}">1</span> / <span th:text="${posts.pages}">10</span> 页
+                </span>
+                <a th:if="${posts.hasNext}" 
+                   th:href="@{/archives(page=${posts.page + 1})}"
+                   class="page-link next">下一页</a>
+            </nav>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

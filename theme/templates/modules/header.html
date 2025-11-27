@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+<header class="site-header">
+    <div class="header-container">
+        <!-- Logo/Avatar -->
+        <div class="site-avatar" th:classappend="${theme.config.basic.avatar.isRounded ? 'rounded' : ''} + ' ' + ${theme.config.basic.avatar.isRotating ? 'rotating' : ''}">
+            <a th:href="@{/}">
+                <img th:src="${theme.config.basic.avatar.favicon}" alt="Site Avatar">
+            </a>
+        </div>
+        
+        <!-- Site Title -->
+        <h1 class="site-title">
+            <a th:href="@{/}" th:text="${site.title}">Site Title</a>
+        </h1>
+        
+        <!-- Navigation -->
+        <nav class="site-nav" th:replace="~{modules/nav :: nav}"></nav>
+        
+        <!-- Dark Mode Toggle -->
+        <button class="dark-mode-toggle" th:if="${theme.config.tools.darkMode}">
+            <span class="icon-sun">☀️</span>
+            <span class="icon-moon">🌙</span>
+        </button>
+    </div>
+</header>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
+<footer class="site-footer">
+    <div class="footer-container">
+        <!-- Footer Links -->
+        <div class="footer-links" th:if="${footerMenus}">
+            <a th:each="menu : ${footerMenus}" 
+               th:href="${menu.href}" 
+               th:text="${menu.name}"
+               th:target="${menu.target}">
+                Footer Link
+            </a>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="footer-copyright">
+            <p th:utext="${theme.config.basic.footer.copyright}">© 2024 Your Site</p>
+        </div>
+        
+        <!-- Theme Info -->
+        <div class="footer-theme-info" th:if="${theme.config.basic.footer.showThemeInfo}">
+            <p>
+                Powered by <a href="https://halo.run" target="_blank">Halo</a> | 
+                Theme <a href="https://github.com/your-repo/halo-theme-a4" target="_blank">A4</a>
+            </p>
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,20 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-a4
+spec:
+  displayName: A4
+  author:
+    name: Your Name
+    website: https://your-website.com
+  description: 模仿A4纸张的极简博客主题，移植自 Hexo-theme-A4
+  logo: https://your-logo-url.com/logo.png
+  website: https://github.com/your-repo/halo-theme-a4
+  repo: https://github.com/your-repo/halo-theme-a4
+  settingName: theme-a4-setting
+  configMapName: theme-a4-configmap
+  version: 1.0.0
+  require: ">=2.0.0"
+  license:
+    - name: MIT
+      url: https://github.com/your-repo/halo-theme-a4/blob/main/LICENSE
