@@ -1,0 +1,45 @@
+# 自动检测文本文件并进行行尾规范化
+* text=auto
+
+# 源代码
+*.java text
+*.js text
+*.ts text
+*.jsx text
+*.tsx text
+*.css text
+*.scss text
+*.html text
+*.xml text
+*.yaml text
+*.yml text
+*.json text
+*.md text
+
+# 脚本文件
+*.sh text eol=lf
+*.bat text eol=crlf
+
+# 二进制文件
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+
+# 导出忽略（发布时不包含的文件）
+.gitignore export-ignore
+.gitattributes export-ignore
+README-PRIVATE.md export-ignore
+notes/ export-ignore
+private/ export-ignore
+.private/ export-ignore

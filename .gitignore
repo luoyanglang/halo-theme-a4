@@ -1,0 +1,75 @@
+# 扩展功能文档（私有计划，不公开）
+docs/extensions.md
+docs/api-design.md
+docs/shop-ui-design.md
+docs/security.md
+docs/deployment.md
+
+# 私有规划文档
+docs/business-plan.md
+docs/monetization.md
+
+# 私有说明文档
+README-PRIVATE.md
+RELEASE-CHECKLIST.md
+QUICK-START.md
+PROJECT-STATUS.md
+FILES-EXPLANATION.md
+INIT-GITHUB.md
+
+# 原 Hexo 主题源码（版权保护）
+hexo-theme-a4/
+original-theme/
+
+# 开发笔记和私有文档
+notes/
+private/
+.private/
+
+# 环境配置
+.env
+.env.local
+.env.*.local
+
+# IDE 配置
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 构建产物
+dist/
+build/
+*.zip
+*.tar.gz
+
+# 依赖
+node_modules/
+vendor/
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 备份文件
+*.bak
+*.backup
