@@ -4,6 +4,7 @@
       layout:decorate="~{layout}">
 <head>
     <title th:text="'归档 - ' + ${site.title}">归档</title>
+    <meta name="description" th:content="'文章归档 - ' + ${site.title}">
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -11,29 +12,61 @@
         <div class="archives-container">
             <h1 class="page-title">文章归档</h1>
             
+            <p class="archives-count" th:if="${posts != null}">
+                共 <strong th:text="${posts.total}">0</strong> 篇文章
+            </p>
+            
             <!-- Posts List -->
-            <div class="posts-list">
+            <div class="posts-list" th:if="${posts != null && !posts.items.empty}">
                 <div th:each="post : ${posts.items}" class="post-item">
-                    <time class="post-date" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
+                    <time class="post-date" 
+                          th:datetime="${post.spec.publishTime}"
+                          th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
                     <h2 class="post-title">
-                        <a th:href="@{/archives/{slug}(slug=${post.spec.slug})}" 
-                           th:text="${post.spec.title}">文章标题</a>
+                        <a th:href="@{${post.status.permalink}}" 
+                           th:text="${post.spec.title}"
+                           th:title="${post.spec.title}">文章标题</a>
                     </h2>
-                    <p class="post-excerpt" th:if="${post.spec.excerpt}" th:text="${post.spec.excerpt}">文章摘要</p>
+                    <p class="post-excerpt" 
+                       th:if="${post.spec.excerpt != null || post.status.excerpt != null}" 
+                       th:text="${post.spec.excerpt ?: post.status.excerpt}">文章摘要</p>
+                    
+                    <!-- Post Meta -->
+                    <div class="post-meta">
+                        <span th:if="${post.categories != null && !post.categories.empty}">
+                            分类: 
+                            <a th:each="category, iterStat : ${post.categories}" 
+                               th:href="@{${category.status.permalink}}"
+                               th:text="${category.spec.displayName + (iterStat.last ? '' : ', ')}">分类</a>
+                        </span>
+                        <span th:if="${post.tags != null && !post.tags.empty}">
+                            标签: 
+                            <a th:each="tag, iterStat : ${post.tags}" 
+                               th:href="@{${tag.status.permalink}}"
+                               th:text="${tag.spec.displayName + (iterStat.last ? '' : ', ')}">标签</a>
+                        </span>
+                    </div>
                 </div>
             </div>
             
+            <!-- Empty State -->
+            <div class="empty-state" th:if="${posts == null || posts.items.empty}">
+                <p>暂无文章</p>
+            </div>
+            
             <!-- Pagination -->
-            <nav class="pagination" th:if="${posts.total > posts.size}">
+            <nav class="pagination" th:if="${posts != null && posts.total > posts.size}">
                 <a th:if="${posts.hasPrevious}" 
                    th:href="@{/archives(page=${posts.page - 1})}"
-                   class="page-link prev">上一页</a>
+                   class="page-link prev"
+                   title="上一页">上一页</a>
                 <span class="page-info">
-                    第 <span th:text="${posts.page}">1</span> / <span th:text="${posts.pages}">10</span> 页
+                    第 <span th:text="${posts.page}">1</span> / <span th:text="${posts.totalPages}">10</span> 页
                 </span>
                 <a th:if="${posts.hasNext}" 
                    th:href="@{/archives(page=${posts.page + 1})}"
-                   class="page-link next">下一页</a>
+                   class="page-link next"
+                   title="下一页">下一页</a>
             </nav>
         </div>
     </div>

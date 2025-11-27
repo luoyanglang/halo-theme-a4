@@ -4,25 +4,50 @@
       layout:decorate="~{layout}">
 <head>
     <title th:text="${site.title}">首页</title>
+    <meta name="description" th:content="${site.description}">
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="index-page" th:classappend="'width-' + ${theme.config.basic.layout.indexWidth}">
+    <div class="index-page" 
+         th:classappend="'width-' + ${theme.config.basic?.layout?.indexWidth ?: 'small'} + ' title-' + ${theme.config.basic?.layout?.indexTitlePosition ?: 'center'}">
         <div class="index-container">
             <!-- Index Header -->
-            <div class="index-header" th:classappend="'title-' + ${theme.config.basic.layout.indexTitlePosition}">
+            <div class="index-header">
                 <h1 class="index-title" th:text="${site.title}">网站标题</h1>
-                <p class="index-description" th:text="${site.description}">网站描述</p>
+                <p class="index-description" th:if="${site.description}" th:text="${site.description}">网站描述</p>
             </div>
             
             <!-- Index Content (Custom Page Content) -->
-            <div class="index-content" th:if="${singlePage}" th:utext="${singlePage.content.content}">
+            <div class="index-content" th:if="${singlePage != null}" th:utext="${singlePage.content.content}">
                 <!-- 自定义首页内容 -->
             </div>
             
+            <!-- Recent Posts (if enabled) -->
+            <div class="index-posts" th:if="${theme.config.index?.list && posts != null}">
+                <h2>最新文章</h2>
+                <ul class="post-list">
+                    <li class="post-item" th:each="post : ${posts.items}">
+                        <time class="post-date" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
+                        <h3 class="post-title">
+                            <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">文章标题</a>
+                        </h3>
+                    </li>
+                </ul>
+            </div>
+            
             <!-- Index Footer -->
-            <div class="index-footer">
+            <div class="index-footer" th:if="${theme.config.basic?.footer?.indexFooter}">
                 <p th:utext="${theme.config.basic.footer.indexFooter}">Email: example@gmail.com</p>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="index-stats" th:if="${theme.config.indexInfo?.allWordCount || theme.config.indexInfo?.allViewCount}">
+                <span th:if="${theme.config.indexInfo?.allWordCount}" class="stat-item">
+                    总字数: <strong th:text="${stats.wordCount ?: 0}">0</strong>
+                </span>
+                <span th:if="${theme.config.indexInfo?.allViewCount}" class="stat-item">
+                    总访问: <strong th:text="${stats.visit ?: 0}">0</strong>
+                </span>
             </div>
         </div>
     </div>

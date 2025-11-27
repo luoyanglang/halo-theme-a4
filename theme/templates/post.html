@@ -4,52 +4,65 @@
       layout:decorate="~{layout}">
 <head>
     <title th:text="${post.spec.title + ' - ' + site.title}">文章标题</title>
-    <meta name="description" th:content="${post.spec.excerpt}">
-    <meta name="keywords" th:content="${#strings.listJoin(post.tags, ',')}">
+    <meta name="description" th:content="${post.spec.excerpt ?: post.status.excerpt}">
+    <meta name="keywords" th:content="${post.tags != null ? #strings.listJoin(post.tags.![spec.displayName], ',') : ''}">
+    <meta property="og:title" th:content="${post.spec.title}">
+    <meta property="og:description" th:content="${post.spec.excerpt ?: post.status.excerpt}">
+    <meta property="og:type" content="article">
 </head>
 <body>
 <th:block layout:fragment="content">
-    <article class="post-page" th:classappend="'width-' + ${theme.config.basic.layout.postWidth}">
+    <article class="post-page" 
+             th:classappend="'width-' + ${theme.config.basic?.layout?.postWidth ?: 'middle'} + ' title-' + ${theme.config.basic?.layout?.postTitlePosition ?: 'center'}">
         <div class="post-container">
             <!-- Post Header -->
-            <header class="post-header" th:classappend="'title-' + ${theme.config.basic.layout.postTitlePosition}">
+            <header class="post-header">
                 <h1 class="post-title" th:text="${post.spec.title}">文章标题</h1>
                 
                 <!-- Post Meta -->
                 <div class="post-meta">
-                    <span class="post-date" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</span>
-                    <span class="post-word-count" th:if="${theme.config.post.postInfo.showWordCount}">
-                        字数: <span th:text="${post.stats.word}">1000</span>
+                    <span class="post-date">
+                        <time th:datetime="${post.spec.publishTime}" 
+                              th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">2024-01-01</time>
                     </span>
-                    <span class="post-read-time" th:if="${theme.config.post.postInfo.showReadTime}">
-                        阅读时间: <span th:text="${post.stats.readTime}">5</span> 分钟
+                    
+                    <span class="post-update-date" 
+                          th:if="${theme.config.post?.postInfo?.showUpdateDate && post.status.lastModifyTime != null}">
+                        更新于: <time th:datetime="${post.status.lastModifyTime}" 
+                                    th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}">2024-01-01</time>
                     </span>
-                    <span class="post-view-count" th:if="${theme.config.post.postInfo.showViewCount}">
-                        阅读量: <span th:text="${post.stats.visit}">100</span>
+                    
+                    <span class="post-word-count" th:if="${theme.config.post?.postInfo?.showWordCount}">
+                        字数: <span th:text="${post.stats.word ?: 0}">1000</span>
+                    </span>
+                    
+                    <span class="post-read-time" th:if="${theme.config.post?.postInfo?.showReadTime}">
+                        阅读: <span th:text="${post.stats.readTime ?: 1}">5</span> 分钟
+                    </span>
+                    
+                    <span class="post-view-count" th:if="${theme.config.post?.postInfo?.showViewCount}">
+                        阅读量: <span th:text="${post.stats.visit ?: 0}">100</span>
                     </span>
                 </div>
                 
                 <!-- Post Categories and Tags -->
                 <div class="post-taxonomy">
-                    <div class="post-categories" th:if="${post.categories}">
+                    <div class="post-categories" th:if="${post.categories != null && !post.categories.empty}">
                         <span>分类: </span>
                         <a th:each="category : ${post.categories}" 
-                           th:href="@{/categories/{slug}(slug=${category.spec.slug})}"
-                           th:text="${category.spec.displayName}">分类</a>
+                           th:href="@{${category.status.permalink}}"
+                           th:text="${category.spec.displayName}"
+                           th:title="${category.spec.displayName}">分类</a>
                     </div>
-                    <div class="post-tags" th:if="${post.tags}">
+                    <div class="post-tags" th:if="${post.tags != null && !post.tags.empty}">
                         <span>标签: </span>
                         <a th:each="tag : ${post.tags}" 
-                           th:href="@{/tags/{slug}(slug=${tag.spec.slug})}"
-                           th:text="${tag.spec.displayName}">标签</a>
+                           th:href="@{${tag.status.permalink}}"
+                           th:text="${tag.spec.displayName}"
+                           th:title="${tag.spec.displayName}">标签</a>
                     </div>
                 </div>
             </header>
-            
-            <!-- Table of Contents (Top) -->
-            <div class="post-toc-top" th:if="${theme.config.tools.topToc}">
-                <div id="toc-top"></div>
-            </div>
             
             <!-- Post Content -->
             <div class="post-content markdown-body" th:utext="${post.content.content}">
@@ -58,43 +71,37 @@
             
             <!-- Post Footer -->
             <footer class="post-footer">
-                <p th:text="${theme.config.post.postInfo.endContent}">以上</p>
-                <p th:text="${theme.config.basic.footer.postFooter}">🌊看过大海的人不会忘记海的广阔🌊</p>
+                <p th:if="${theme.config.post?.postInfo?.endContent}" 
+                   th:text="${theme.config.post.postInfo.endContent}">以上</p>
+                <p th:if="${theme.config.basic?.footer?.postFooter}" 
+                   th:utext="${theme.config.basic.footer.postFooter}">🌊看过大海的人不会忘记海的广阔🌊</p>
             </footer>
             
             <!-- Prev/Next Navigation -->
-            <nav class="post-navigation" th:if="${theme.config.post.postInfo.showPrevNext}">
-                <div class="nav-prev" th:if="${prevPost}">
-                    <span th:text="${theme.config.post.postInfo.prevText}">上一篇</span>
-                    <a th:href="@{/archives/{slug}(slug=${prevPost.spec.slug})}" 
-                       th:text="${prevPost.spec.title}">上一篇文章</a>
+            <nav class="post-navigation" th:if="${theme.config.post?.postInfo?.showPrevNext}">
+                <div class="nav-prev" th:if="${prevPost != null}">
+                    <span th:text="${theme.config.post.postInfo.prevText ?: '上一篇'}">上一篇</span>
+                    <a th:href="@{${prevPost.status.permalink}}" 
+                       th:text="${prevPost.spec.title}"
+                       th:title="${prevPost.spec.title}">上一篇文章</a>
                 </div>
-                <div class="nav-next" th:if="${nextPost}">
-                    <span th:text="${theme.config.post.postInfo.nextText}">下一篇</span>
-                    <a th:href="@{/archives/{slug}(slug=${nextPost.spec.slug})}" 
-                       th:text="${nextPost.spec.title}">下一篇文章</a>
+                <div class="nav-next" th:if="${nextPost != null}">
+                    <span th:text="${theme.config.post.postInfo.nextText ?: '下一篇'}">下一篇</span>
+                    <a th:href="@{${nextPost.status.permalink}}" 
+                       th:text="${nextPost.spec.title}"
+                       th:title="${nextPost.spec.title}">下一篇文章</a>
                 </div>
             </nav>
             
             <!-- Comments -->
-            <div class="post-comments" th:if="${theme.config.comment.enable}">
+            <div class="post-comments" th:if="${theme.config.comment?.enable}">
                 <halo:comment 
                     group="content.halo.run"
                     kind="Post"
                     th:attr="name=${post.metadata.name}" />
             </div>
         </div>
-        
-        <!-- Sidebar TOC (Left) -->
-        <aside class="post-toc-sidebar" th:if="${theme.config.tools.leftToc}">
-            <div id="toc-sidebar"></div>
-        </aside>
     </article>
-</th:block>
-
-<th:block layout:fragment="scripts">
-    <script th:src="@{/assets/js/toc.js}"></script>
-    <script th:src="@{/assets/js/gallery.js}"></script>
 </th:block>
 </body>
 </html>

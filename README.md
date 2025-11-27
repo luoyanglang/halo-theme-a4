@@ -154,7 +154,7 @@ halo-theme-a4/
 
 1. 克隆项目
 ```bash
-git clone https://github.com/your-repo/halo-theme-a4.git
+git clone https://github.com/luoyanglang/halo-theme-a4.git
 cd halo-theme-a4
 ```
 
@@ -175,7 +175,7 @@ cd halo-theme-a4
 本主题专注于提供优质的博客阅读体验。如果你需要更多高级功能（如会员系统、付费内容等），欢迎联系我们讨论定制开发方案。
 
 **联系方式**：
-- Email: your-email@example.com
+- Email: admin@ymd.cc
 - GitHub Issues: 提出你的需求
 
 ## 贡献指南
